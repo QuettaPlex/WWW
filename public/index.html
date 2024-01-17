@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex">
-    <title>QuettaPlex合同会社</title>
+    <title>QuettaPlex</title>
 
     <style>
         :root {
@@ -64,16 +64,25 @@
             padding: 0 1rem;
         }
 
+        section {
+            margin: 2rem;
+        }
+
         span {
             display: inline-block;
         }
 
         .head {
-            font-size: 4rem;
+            font-size: 2.5rem;
             font-weight: bold;
             display: block;
             text-align: center;
-            margin: 2rem 0;
+            line-height: 1.25;
+            margin-bottom: 1em;
+        }
+
+        .head .big {
+            font-size: 4rem;
         }
 
         .text-gradient-blue-green {
@@ -88,7 +97,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .text-underline-pink-yellow{
+        .text-underline-pink-yellow {
             background: linear-gradient(90deg, var(--dark-pink), var(--dark-yellow));
             background-repeat: no-repeat;
             background-size: 100% 0.2em;
@@ -103,6 +112,63 @@
             align-items: center;
             flex-direction: column;
         }
+
+        .cards {
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            width: calc(100% / 3 - 2rem);
+            min-height: 10rem;
+            background: var(--white);
+            box-shadow: 0 0.25rem 0.5rem var(--shadow);
+            margin: 1rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+        }
+
+        .card.w2 {
+            width: calc(100% / 3 * 2 - 2rem);
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        @media screen and (max-width: 768px) {
+            .card {
+                width: 100%;
+            }
+
+            .card.w2 {
+                width: 100%;
+            }
+        }
+
+        .background-blue-gradient {
+            background: linear-gradient(0deg, var(--dark-blue), var(--blue));
+            color: var(--white);
+        }
+
+        .background-yellow-gradient {
+            background: linear-gradient(0deg, var(--dark-yellow), var(--yellow));
+        }
+
+        .background-green-gradient {
+            background: linear-gradient(0deg, var(--dark-green), var(--green));
+        }
+
+        .background-pink-gradient {
+            background: linear-gradient(0deg, var(--dark-pink), var(--pink));
+        }
     </style>
 </head>
 
@@ -115,13 +181,103 @@
 
     <main>
         <section>
-            <span class="head">
-                <span class="text-gradient-blue-green">コドモだから</span>って
-                <br>
-                <span class="text-gradient-green-yellow">サービスが使えない</span>のは<span class="text-underline-pink-yellow">おかしい</span>
-            </span>
+            <p>
+                <span class="head">
+                    <span class="text-gradient-blue-green big">大学生じゃないから</span>って
+                    <br>
+                    <span class="text-gradient-green-yellow big">ITサービスが使えない!</span>のは<span
+                        class="text-underline-pink-yellow big">おかしい</span>
+                </span>
+            </p>
+            <p>
+                そんな情報系小学生・中学生・高校生のために、<br>
+                QuettaPlexは、<br>
+                サーバーホストやWebサービスを提供しています。
+            </p>
+        </section>
+        <section>
+            <div class="cards">
+                <div class="card w2 background-blue-gradient">
+                    <h2>Quetta Host</h2>
+                    <p>
+
+                    </p>
+                </div>
+                <div class="card w1 background-yellow-gradient">
+                    <h2>Quetta Web</h2>
+                    <p>
+                    </p>
+                </div>
+                <div class="card w1 background-green-gradient">
+                    <h2>Quetta Minecraft</h2>
+                    <p>
+                    </p>
+                </div>
+                <div class="card w2 background-pink-gradient">
+                    <h2>Quetta SQL</h2>
+                    <p>
+                    </p>
+                </div>
         </section>
     </main>
+
+    <div class="modal">
+        <h2>このページは作成中です</h2>
+        <p>
+            このページは現在作成中です。<br>
+            しばらくお待ちください。
+        </p>
+        <button class="button">続行</button>
+        <style>
+            .modal {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: var(--white-transparent);
+                backdrop-filter: blur(1rem);
+                -webkit-backdrop-filter: blur(1rem);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                z-index: 1000;
+                display: none;
+            }
+
+            .modal h2 {
+                font-size: 2rem;
+                font-weight: bold;
+                margin-bottom: 1rem;
+            }
+
+            .modal p {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .modal .button {
+                font-size: 1rem;
+                padding: 0.5rem 1rem;
+                border-radius: 0.5rem;
+                background: var(--white);
+                box-shadow: 0 0.25rem 0.5rem var(--shadow);
+                border: none;
+                cursor: pointer;
+            }
+
+            .modal .button:hover {
+                background: var(--white-transparent);
+            }
+        </style>
+        <script>
+            document.querySelector(".modal .button").addEventListener("click", () => {
+                document.querySelector(".modal").style.display = "none";
+            });
+            document.querySelector(".modal").style.display = "flex";
+        </script>
+    </div>
 </body>
 
 </html>
