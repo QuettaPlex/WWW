@@ -85,6 +85,16 @@
             font-size: 4rem;
         }
 
+        @media screen and (max-width: 768px) {
+            .head {
+                font-size: 2rem;
+            }
+
+            .head .big {
+                font-size: 3rem;
+            }
+        }
+
         .text-gradient-blue-green {
             background: linear-gradient(90deg, var(--dark-blue), var(--dark-green));
             -webkit-background-clip: text;
@@ -195,29 +205,47 @@
                 サーバーホストやWebサービスを提供しています。
             </p>
         </section>
-        <section>
+        <section style="margin-left: 1rem; margin-right: 1rem; min-height: 50vh;">
             <div class="cards">
                 <div class="card w2 background-blue-gradient">
                     <h2>Quetta Host</h2>
                     <p>
-
+                        Quetta Hostは、QuettaPlexが提供するレンタルサーバーサービスです。<br>
+                        小中学生は無料枠あり！
                     </p>
                 </div>
                 <div class="card w1 background-yellow-gradient">
                     <h2>Quetta Web</h2>
                     <p>
+                        Quetta Webは、はQuettaPlexが提供するWeb公開サービスです。<br>
+                        基本無料！
                     </p>
                 </div>
-                <div class="card w1 background-green-gradient">
+                <div class="card w1 background-pink-gradient">
+                    <h2>Quetta Short URL</h2>
+                    <p>
+                        Quetta Short URLは、QuettaPlexが提供する短縮URLサービスです。<br>
+                        無料！
+                    </p>
+                </div>
+                <div class="card w2 background-green-gradient">
                     <h2>Quetta Minecraft</h2>
                     <p>
+                        Quetta Minecraftは、QuettaPlexが提供するMinecraftサーバーサービスです。<br>
+                        基本無料！
                     </p>
                 </div>
-                <div class="card w2 background-pink-gradient">
-                    <h2>Quetta SQL</h2>
+        </section>
+        <section>
+            <h2>お知らせ</h2>
+            <div class="news">
+                <div class="card">
+                    <h3>2023/1/17</h3>
                     <p>
+                        QuettaPlexの公式ホームページを公開しました。
                     </p>
                 </div>
+            </div>
         </section>
     </main>
 
@@ -275,7 +303,7 @@
             document.querySelector(".modal .button").addEventListener("click", () => {
                 document.querySelector(".modal").style.display = "none";
             });
-            document.querySelector(".modal").style.display = "flex";
+            //document.querySelector(".modal").style.display = "flex";
         </script>
     </div>
 </body>
