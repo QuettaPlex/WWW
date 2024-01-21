@@ -25,7 +25,7 @@ dnsServer.on("request", (request, response) => {
     response.send();
 });
 
-dnsPort.on("error", (err) => {
+dnsServer.on("error", (err) => {
     console.log(err.stack);
 });
 
