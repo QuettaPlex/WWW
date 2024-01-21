@@ -13,6 +13,6 @@
   "dependencies": {
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "node-named": "^0.0.1"
+    "native-node-dns": "^0.7.6"
   }
 }
