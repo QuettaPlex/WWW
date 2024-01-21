@@ -7,14 +7,6 @@ const dnsServer = dns.createServer();
 const port = process.env.PORT || 3000;
 const dnsPort = process.env.DNS_PORT || 53;
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true, limit: "50mb" }));
-app.use(express.static("public"));
-
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
-
 dnsServer.on("request", (request, response) => {
     console.log(request);
     response.additional.push(dns.A({
@@ -34,3 +26,11 @@ dnsServer.on("listening", () => {
 });
 
 dnsServer.serve(dnsPort);
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
+app.use(express.static("public"));
+
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
