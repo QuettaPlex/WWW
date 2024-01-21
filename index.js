@@ -21,7 +21,7 @@ dnsServer.on("error", (err) => {
     console.log(err.stack);
 });
 
-dnsServer.on("listening", () => {
+dnsServer.on("listening", function () {
     console.log("server listening on", this.address());
 });
 
