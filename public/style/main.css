@@ -1,0 +1,219 @@
+:root {
+    --white: #f2f5ff;
+    --white-transparent: #f2f5ff80;
+    --black: #030e33;
+    --pink: #f49097;
+    --dark-pink: #d17b81;
+    --yellow: #f5e960;
+    --dark-yellow: #d1c652;
+    --green: #55d6c2;
+    --dark-green: #47b3a2;
+    --blue: #3a86ff;
+    --dark-blue: #3273db;
+    --shadow: #8595cc40;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", sans-serif;
+    line-height: 1.5;
+    color: var(--black);
+    background-color: var(--white);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+nav {
+    background: var(--white-transparent);
+    box-shadow: 0 0.25rem 0.5rem var(--shadow);
+    position: sticky;
+    -webkit-position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    backdrop-filter: blur(0.5rem);
+    -webkit-backdrop-filter: blur(0.5rem);
+}
+
+nav img {
+    width: 10rem;
+    padding: 0.5rem;
+}
+
+main {
+    width: 100%;
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+    flex: 1;
+}
+
+section {
+    margin: 2rem;
+}
+
+span {
+    display: inline-block;
+}
+
+a {
+    text-decoration: none;
+    color: var(--dark-blue);
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    padding: 2rem;
+    text-align: center;
+    background: var(--blue);
+    color: var(--white);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+footer #copyright {
+    min-width: 20rem;
+    min-height: 4rem;
+}
+
+footer #links {
+    min-width: 20rem;
+}
+
+footer #links ul {
+    list-style: none;
+}
+
+footer #links ul li a {
+    display: block;
+    padding: 0.5rem;
+    color: var(--white);
+}
+
+.head {
+    font-size: 2.5rem;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+    line-height: 1.25;
+    margin-bottom: 1em;
+}
+
+.head .big {
+    font-size: 4rem;
+}
+
+@media screen and (max-width: 768px) {
+    .head {
+        font-size: 2rem;
+    }
+
+    .head .big {
+        font-size: 3rem;
+    }
+}
+
+.text-gradient-blue-green {
+    background: linear-gradient(90deg, var(--dark-blue), var(--dark-green));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-green-yellow {
+    background: linear-gradient(90deg, var(--dark-green), var(--dark-yellow));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-underline-pink-yellow {
+    background: linear-gradient(90deg, var(--dark-pink), var(--dark-yellow));
+    background-repeat: no-repeat;
+    background-size: 100% 0.2em;
+    background-position: bottom;
+    display: inline;
+}
+
+.cards {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: calc(100% / 3 - 2rem);
+    min-height: 10rem;
+    background: var(--white);
+    box-shadow: 0 0.25rem 0.5rem var(--shadow);
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+}
+
+.card.w2 {
+    width: calc(100% / 3 * 2 - 2rem);
+}
+
+.card h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+    .card {
+        width: 100%;
+    }
+
+    .card.w2 {
+        width: 100%;
+    }
+}
+
+.background-blue-gradient {
+    background: linear-gradient(0deg, var(--dark-blue), var(--blue));
+    color: var(--white);
+}
+
+.background-yellow-gradient {
+    background: linear-gradient(0deg, var(--dark-yellow), var(--yellow));
+}
+
+.background-green-gradient {
+    background: linear-gradient(0deg, var(--dark-green), var(--green));
+}
+
+.background-pink-gradient {
+    background: linear-gradient(0deg, var(--dark-pink), var(--pink));
+}
+
+.news {
+    background: var(--white);
+    box-shadow: 0 0.25rem 0.5rem var(--shadow);
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
