@@ -5,34 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex">
-    <title>QuettaPlex</title>
+    <meta property="og:title" content="QuettaPlex - {{title}}">
+    <meta property="og:description" content="{{description}}">
+    <meta property="og:image" content="{{image}}">
+    <meta property="og:url" content="{{url}}">
+    <title>QuettaPlex - {{title}}</title>
 
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="style/main.css">
+    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/style/main.css">
 </head>
 
 <body>
     <nav>
         <h1>
-            <img src="./logo.svg" alt="QuettaPlex">
+            <a href="/"><img src="/assets/logo.svg" alt="QuettaPlex"></a>
         </h1>
     </nav>
 
-    <main>
-        <section>
-            <h2>お知らせ</h2>
-            <div class="news">
-                <h3>2020/1/17</h3>
-                <p>
-                    QuettaPlexのサイトを公開しました。
-                </p>
-            </div>
-        </section>
-    </main>
+    {{content}}
 
     <footer>
         <div id="copyright">
-            &copy; 2024 合同会社QuettaPlex
+            &copy; 2024 QuettaPlex
         </div>
         <div id="links">
             <ul>
