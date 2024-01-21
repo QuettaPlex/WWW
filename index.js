@@ -1,5 +1,5 @@
 const express = require("express");
-const dns = require("native-dns");
+const dns = require("native-node-dns");
 require("dotenv").config();
 
 const app = express();
@@ -21,8 +21,8 @@ dnsServer.on("error", (err) => {
     console.log(err.stack);
 });
 
-dnsServer.on("listening", function () {
-    console.log("server listening on", this.address());
+dnsServer.on("listening", () => {
+    console.log("server listening on", dnsServer.address());
 });
 
 dnsServer.serve(dnsPort);
