@@ -2,6 +2,7 @@
 import fs from "node:fs";
 import express from "express";
 import morgan from "morgan";
+import * as dateFns from "date-fns";
 import dotenv from "dotenv";
 import generateErrorPage from "./modules/generate_error_page";
 import extractYAMLAndHTML from "./modules/extract_yaml_and_html";
@@ -30,12 +31,20 @@ app.use((req, res, next) => {
 });
 app.use(express.static("public"));
 app.get("/sitemap.xml", (req, res) => {
-    const files = fs.readdirSync("./views").filter((file) => file.endsWith(".html"));
-    const urls = files.map((file) => {
-        const url = file.replace("index.html", "");
-        const lastmod = fs.statSync("./views/" + file).mtime.toISOString();
+    const getFiles = (dir: string): string[] => {
+        const dirents = fs.readdirSync(dir, { withFileTypes: true });
+        const files = dirents.map((dirent) => {
+            const res = dir + "/" + dirent.name;
+            return dirent.isDirectory() ? getFiles(res) : res;
+        });
+        return Array.prototype.concat(...files);
+    };
+    const files = getFiles("./views");
+    const urls = files.filter((file) => file.endsWith(".html")).map((file) => {
+        const url = file.replace("./views", "").replace("index.html", "");
+        const lastmod = dateFns.format(fs.statSync(file).mtime, "yyyy-MM-dd");
         const priority = Math.max(1 - (url.split("/").length - 2) * 0.1, 0.5);
-        return `<url><loc>https://quettaplex.com/${encodeURI(url)}</loc><lastmod>${lastmod}</lastmod><priority>${priority}</priority></url>`;
+        return `<url><loc>https://renorari.net${encodeURI(url)}</loc><lastmod>${lastmod}</lastmod><priority>${priority}</priority></url>`;
     });
     const xml = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.join("")}</urlset>`;
     res.header("Content-Type", "text/xml");
