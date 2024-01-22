@@ -15,8 +15,6 @@
 
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
 }
 
 body {
@@ -74,6 +72,25 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+
+p {
+    margin: 0.5rem 0;
+}
+
+h1 {
+    margin: 0;
+    padding: 0;
+}
+
+h2,h3,h4,h5,h6 {
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+}
+
+ul {
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 footer {
@@ -216,4 +233,29 @@ footer #links ul li a {
     margin: 1rem;
     padding: 1rem;
     border-radius: 0.5rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th {
+    background: var(--blue);
+    color: var(--white);
+    padding: 0.5rem;
+    border: 1px solid var(--blue);
+}
+
+table td {
+    padding: 0.5rem;
+    border: 1px solid var(--blue);
+}
+
+table tr:nth-child(odd) {
+    background: var(--white-transparent);
+}
+
+table tr:nth-child(even) {
+    background: var(--white);
 }
