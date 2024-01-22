@@ -182,7 +182,7 @@ footer #links ul li a {
 }
 
 .card {
-    width: calc(100% / 3 - 2rem);
+    width: calc(100% - 2rem);
     min-height: 10rem;
     background: var(--white);
     box-shadow: 0 0.25rem 0.5rem var(--shadow);
@@ -190,6 +190,10 @@ footer #links ul li a {
     padding: 1rem;
     border-radius: 0.5rem;
     text-align: center;
+}
+
+.card.w1 {
+    width: calc(100% / 3 - 2rem);
 }
 
 .card.w2 {
