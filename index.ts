@@ -74,7 +74,7 @@ app.get("*", (req, res) => {
                     .replace(/{{description}}/g, info.description)
                     .replace(/{{keywords}}/g, info.keywords)
                     .replace(/{{image}}/g, info.image)
-                    .replace(/{{url}}/g, `https://quettaplex.com${requestPath}`)
+                    .replace(/{{url}}/g, `https://quettaplex.com${requestPath}`.replace("index.html", ""))
             );
         }
     });
