@@ -29,6 +29,18 @@ app.use((req, res, next) => {
     next();
 });
 app.use(express.static("public"));
+app.get("/sitemap.xml", (req, res) => {
+    const files = fs.readdirSync("./views").filter((file) => file.endsWith(".html"));
+    const urls = files.map((file) => {
+        const url = file.replace("index.html", "");
+        const lastmod = fs.statSync("./views/" + file).mtime.toISOString();
+        const priority = Math.max(1 - (url.split("/").length - 2) * 0.1, 0.5);
+        return `<url><loc>https://quettaplex.com/${encodeURI(url)}</loc><lastmod>${lastmod}</lastmod><priority>${priority}</priority></url>`;
+    });
+    const xml = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.join("")}</urlset>`;
+    res.header("Content-Type", "text/xml");
+    res.send(xml);
+});
 app.get("*", (req, res) => {
     const requestPath = decodeURI(req.url.endsWith("/") ? req.url + "index.html" : req.url).replace(/\.\./g, "");
     const contentPath = requestPath.replace("/", "./views/");
