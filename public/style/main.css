@@ -83,7 +83,11 @@ h1 {
     padding: 0;
 }
 
-h2,h3,h4,h5,h6 {
+h2,
+h3,
+h4,
+h5,
+h6 {
     margin-top: 0.5rem;
     margin-bottom: 0;
 }
@@ -187,9 +191,12 @@ footer #links ul li a {
     background: var(--white);
     box-shadow: 0 0.25rem 0.5rem var(--shadow);
     margin: 1rem;
-    padding: 1rem;
+    padding: 1rem 2rem;
     border-radius: 0.5rem;
-    text-align: center;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
 }
 
 .card.w1 {
@@ -214,6 +221,15 @@ footer #links ul li a {
     .card.w2 {
         width: 100%;
     }
+}
+
+.big {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.underline {
+    text-decoration: underline;
 }
 
 .background-blue-gradient {
