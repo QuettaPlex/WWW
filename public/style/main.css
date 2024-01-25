@@ -282,3 +282,61 @@ table tr:nth-child(odd) {
 table tr:nth-child(even) {
     background: var(--white);
 }
+
+form {
+    width: 100%;
+    max-width: 40rem;
+    margin: 0 auto;
+}
+
+form input,
+form textarea {
+    width: 100%;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    border: 1px solid var(--blue);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+}
+
+form label {
+    display: block;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+}
+
+form textarea {
+    height: 10rem;
+    resize: none;
+}
+
+form input:focus,
+form textarea:focus {
+    outline: none;
+    border-color: var(--dark-blue);
+}
+
+form input[type="submit"] {
+    background: var(--blue);
+    color: var(--white);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+form input[type="submit"]:hover {
+    background: var(--dark-blue);
+}
+
+form input[type="submit"]:focus {
+    background: var(--dark-blue);
+}
+
+form input[type="submit"]:active {
+    background: var(--dark-blue);
+}
+
+form input[type="submit"]:disabled {
+    background: var(--white);
+    color: var(--blue);
+    cursor: not-allowed;
+}
