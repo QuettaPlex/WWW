@@ -3,6 +3,7 @@ import fs from "node:fs";
 import express from "express";
 import morgan from "morgan";
 import * as dateFns from "date-fns";
+import  * as mailer from "nodemailer";
 import dotenv from "dotenv";
 import generateErrorPage from "./modules/generate_error_page";
 import extractYAMLAndHTML from "./modules/extract_yaml_and_html";
@@ -12,6 +13,15 @@ const isDebug = process.env.NODE_ENV === "development";
 
 const app = express();
 const port = process.env.PORT || 3000;
+const smtp = mailer.createTransport({
+    "host": process.env.MAIL_HOST,
+    "port": Number(process.env.MAIL_PORT),
+    "secure": true,
+    "auth": {
+        "user": process.env.MAIL_USER,
+        "pass": process.env.MAIL_PASS
+    }
+});
 
 const discordWebhook = process.env.DISCORD_WEBHOOK as string;
 const template = fs.readFileSync("./public/page.html", "utf8");
@@ -134,7 +144,18 @@ app.post("/contact.html", (req, res) => {
             ]
         })
     }).then(() => {
-        res.redirect(302, "/contact-success.html");
+        smtp.sendMail({
+            from: "\"QuettaPlex\" <contact@quettaplex.com>",
+            to: email,
+            subject: "【QuettaPlex】お問い合わせ確認メール",
+            text: `この度はQuettaPlexにお問い合わせいただきありがとうございます。\n以下の内容でお問い合わせを受け付けました。\n\nお名前: ${name}\nメールアドレス: ${email}\n電話番号: ${tel}\n郵便番号: ${zip}\n住所: ${address}\n件名: ${subject}\n本文: ${message}\n\n後ほど担当者よりご連絡いたしますので、今しばらくお待ちください。\n※なお、このメールは自動送信によるもので、返信などはできません。`,
+        })
+            .then(() => {
+                res.redirect(302, "/contact-success.html");
+            })
+            .catch(() => {
+                res.status(500).send(generateErrorPage(500));
+            });
     }).catch(() => {
         res.status(500).send(generateErrorPage(500));
     });
