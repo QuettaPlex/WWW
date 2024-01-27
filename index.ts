@@ -85,7 +85,7 @@ app.use((req, res, next) => {
 
     if (req.method !== "GET") {
         ipAccessCount[getIP(req)] = (ipAccessCount[getIP(req)] || 0) + 1;
-        if (ipAccessCount[getIP(req)] > 5) {
+        if (ipAccessCount[getIP(req)] > 2) {
             if (underAttackTimer) {
                 setUnderAttackTimer();
             } else {
