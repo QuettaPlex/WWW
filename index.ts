@@ -7,6 +7,7 @@ import  * as mailer from "nodemailer";
 import dotenv from "dotenv";
 import generateErrorPage from "./modules/generate_error_page";
 import extractYAMLAndHTML from "./modules/extract_yaml_and_html";
+import getIP from "./modules/get_ip";
 dotenv.config();
 
 const isDebug = process.env.NODE_ENV === "development";
@@ -113,7 +114,7 @@ app.post("/contact.html", (req, res) => {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            content: `**${name}**(${req.ip})からのお問い合わせです。`,
+            content: `**${name}**(${getIP(req)})からのお問い合わせです。`,
             embeds: [
                 {
                     title: subject,
