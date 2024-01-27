@@ -61,7 +61,7 @@ app.use((req, res, next) => {
         return res.redirect(302, "https://quettaplex.com");
     }
 
-    logger.info(`${getIP(req)} - - [${dateFns.format(new Date(), "dd/MMM/yyyy:HH:mm:ss ZZZ")}] "${req.method} ${req.url} HTTP/${req.httpVersion}" ${res.statusCode} ${req.headers["content-length"] || 0} "${req.headers.referer || "-"}" "${req.headers["user-agent"] || "-"}"`);
+    logger.info(`${getIP(req)} - "${req.method} ${req.url} HTTP/${req.httpVersion}" ${res.statusCode} ${req.headers["content-length"] || 0} "${req.headers.referer || "-"}" "${req.headers["user-agent"] || "-"}"`);
 
     next();
 });
