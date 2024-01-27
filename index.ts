@@ -76,7 +76,7 @@ app.use((req, res, next) => {
     if (req.headers["cf-connecting-ip"]) {
         req.headers["x-forwarded-for"] = getIP(req);
     }
-    
+
     if (!req.headers.host?.includes("quettaplex.com") && !isDebug) {
         return res.redirect(302, "https://quettaplex.com");
     }
@@ -85,7 +85,7 @@ app.use((req, res, next) => {
 
     if (req.method !== "GET") {
         ipAccessCount[getIP(req)] = (ipAccessCount[getIP(req)] || 0) + 1;
-        if (ipAccessCount[getIP(req)] > 1) {
+        if (ipAccessCount[getIP(req)] > 5) {
             if (underAttackTimer) {
                 setUnderAttackTimer();
             } else {
