@@ -17,7 +17,7 @@ log4js.configure({
         },
         system: {
             type: "dateFile",
-            filename: "logs/access.log",
+            filename: "logs/server.log",
             pattern: ".yyyy-MM-dd",
             keepFileExt: true,
             compress: true,
@@ -36,7 +36,7 @@ const isDebug = process.env.NODE_ENV === "development";
 
 const app = express();
 const port = process.env.PORT || 3000;
-const logger = log4js.getLogger();
+const accessLogger = log4js.getLogger("access");
 const smtp = mailer.createTransport({
     "host": process.env.MAIL_HOST,
     "port": Number(process.env.MAIL_PORT),
@@ -61,7 +61,7 @@ app.use((req, res, next) => {
         return res.redirect(302, "https://quettaplex.com");
     }
 
-    logger.info(`${getIP(req)} - "${req.method} ${req.url} HTTP/${req.httpVersion}" ${res.statusCode} ${req.headers["content-length"] || 0} "${req.headers.referer || "-"}" "${req.headers["user-agent"] || "-"}"`);
+    accessLogger.info(`${getIP(req)} - "${req.method} ${req.url} HTTP/${req.httpVersion}" ${res.statusCode} ${req.headers["content-length"] || 0} "${req.headers.referer || "-"}" "${req.headers["user-agent"] || "-"}"`);
 
     next();
 });
