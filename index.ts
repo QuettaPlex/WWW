@@ -1,19 +1,42 @@
 //import cloudflare from "cloudflare";
 import fs from "node:fs";
 import express from "express";
-import morgan from "morgan";
 import * as dateFns from "date-fns";
 import  * as mailer from "nodemailer";
+import * as log4js from "log4js";
 import dotenv from "dotenv";
 import generateErrorPage from "./modules/generate_error_page";
 import extractYAMLAndHTML from "./modules/extract_yaml_and_html";
 import getIP from "./modules/get_ip";
 dotenv.config();
 
+log4js.configure({
+    appenders: {
+        stdout: {
+            type: "stdout"
+        },
+        system: {
+            type: "dateFile",
+            filename: "logs/access.log",
+            pattern: ".yyyy-MM-dd",
+            keepFileExt: true,
+            compress: true,
+            daysToKeep: 30
+        }
+    },
+    categories: {
+        default: {
+            appenders: ["stdout", "system"],
+            level: "trace"
+        }
+    }
+});
+
 const isDebug = process.env.NODE_ENV === "development";
 
 const app = express();
 const port = process.env.PORT || 3000;
+const logger = log4js.getLogger();
 const smtp = mailer.createTransport({
     "host": process.env.MAIL_HOST,
     "port": Number(process.env.MAIL_PORT),
@@ -31,16 +54,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use((req, res, next) => {
     if (req.headers["cf-connecting-ip"]) {
-        req.headers["x-forwarded-for"] = req.headers["cf-connecting-ip"];
+        req.headers["x-forwarded-for"] = getIP(req);
     }
 
     if (!req.headers.host?.includes("quettaplex.com") && !isDebug) {
         return res.redirect(302, "https://quettaplex.com");
     }
 
+    logger.info(`${getIP(req)} - - [${dateFns.format(new Date(), "dd/MMM/yyyy:HH:mm:ss ZZZ")}] "${req.method} ${req.url} HTTP/${req.httpVersion}" ${res.statusCode} ${req.headers["content-length"] || 0} "${req.headers.referer || "-"}" "${req.headers["user-agent"] || "-"}"`);
+
     next();
 });
-app.use(isDebug ? morgan("dev") : morgan("combined"));
 app.use(express.static("public"));
 app.get("/sitemap.xml", (req, res) => {
     const getFiles = (dir: string): string[] => {
