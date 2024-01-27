@@ -30,7 +30,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use((req, res, next) => {
     if (req.headers["cf-connecting-ip"]) {
-        req.ip = Array.isArray(req.headers["cf-connecting-ip"]) ? req.headers["cf-connecting-ip"][0] : req.headers["cf-connecting-ip"];
+        req.headers["x-forwarded-for"] = req.headers["cf-connecting-ip"];
     }
 
     if (!req.headers.host?.includes("quettaplex.com") && !isDebug) {
