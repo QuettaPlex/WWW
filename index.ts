@@ -1,8 +1,7 @@
-//import cloudflare from "cloudflare";
 import fs from "node:fs";
 import express from "express";
 import * as dateFns from "date-fns";
-import  * as mailer from "nodemailer";
+import * as mailer from "nodemailer";
 import * as log4js from "log4js";
 import dotenv from "dotenv";
 import generateErrorPage from "./modules/generate_error_page";
@@ -50,18 +49,64 @@ const smtp = mailer.createTransport({
 const discordWebhook = process.env.DISCORD_WEBHOOK as string;
 const template = fs.readFileSync("./public/page.html", "utf8");
 
+const ipAccessCount: { [key: string]: number } = {};
+let underAttackTimer: NodeJS.Timeout | null = null;
+
+function setUnderAttackTimer() {
+    if (underAttackTimer) clearTimeout(underAttackTimer);
+    underAttackTimer = setTimeout(() => {
+        fetch(`https://api.cloudflare.com/client/v4/zones/${process.env.CLOUDFLARE_ZONE_ID}/settings/security_level`, {
+            "method": "PATCH",
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${process.env.CLOUDFLARE_TOKEN}`
+            },
+            "body": JSON.stringify({
+                "value": "high"
+            })
+        }).then(() => {
+            underAttackTimer = null;
+        }).catch();
+    }, 60000);
+}
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use((req, res, next) => {
     if (req.headers["cf-connecting-ip"]) {
         req.headers["x-forwarded-for"] = getIP(req);
     }
-
+    
     if (!req.headers.host?.includes("quettaplex.com") && !isDebug) {
         return res.redirect(302, "https://quettaplex.com");
     }
 
     accessLogger.info(`${getIP(req)} - "${req.method} ${req.url} HTTP/${req.httpVersion}" ${res.statusCode} ${req.headers["content-length"] || 0} "${req.headers.referer || "-"}" "${req.headers["user-agent"] || "-"}"`);
+
+    if (req.method !== "GET") {
+        ipAccessCount[getIP(req)] = (ipAccessCount[getIP(req)] || 0) + 1;
+        if (ipAccessCount[getIP(req)] > 1) {
+            if (underAttackTimer) {
+                setUnderAttackTimer();
+            } else {
+                fetch(`https://api.cloudflare.com/client/v4/zones/${process.env.CLOUDFLARE_ZONE_ID}/settings/security_level`, {
+                    "method": "PATCH",
+                    "headers": {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${process.env.CLOUDFLARE_TOKEN}`
+                    },
+                    "body": JSON.stringify({
+                        "value": "under_attack"
+                    })
+                }).catch();
+                setUnderAttackTimer();
+                return res.status(429).send(generateErrorPage(429));
+            }
+            setTimeout(() => {
+                ipAccessCount[getIP(req)] = (ipAccessCount[getIP(req)] || 0) - 1;
+            }, 60000);
+        }
+    }
 
     next();
 });
