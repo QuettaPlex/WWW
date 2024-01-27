@@ -176,6 +176,19 @@ app.post("/contact.html", (req, res) => {
     if (!name || !email || !tel || !zip || !address || !subject || !message) {
         return res.status(400).send(generateErrorPage(400));
     }
+    if (!email.match(/.+@.+/)) {
+        return res.status(400).send(generateErrorPage(400));
+    }
+    // eslint-disable-next-line no-useless-escape
+    if (!tel.match(/^[0-9]{2,4}[0-9]{2,4}[0-9]{3,4}$/)) {
+        return res.status(400).send(generateErrorPage(400));
+    }
+    if (!zip.match(/^[0-9]{3}-[0-9]{4}$/)) {
+        return res.status(400).send(generateErrorPage(400));
+    }
+    if (name.length > 50 || email.length > 50 || tel.length > 50 || zip.length != 8 || address.length > 50 || subject.length > 50 || message.length > 1000) {
+        return res.status(400).send(generateErrorPage(400));
+    }
 
     fetch(discordWebhook, {
         method: "POST",

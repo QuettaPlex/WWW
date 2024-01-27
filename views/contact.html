@@ -27,25 +27,25 @@ image: https://quettaplex.com/assets/ogp.png
         <h2>お問い合わせ</h2>
         <form method="post">
             <label for="name">お名前</label>
-            <input type="text" name="name" id="name" placeholder="お名前(フルネーム)" required>
+            <input type="text" name="name" id="name" placeholder="お名前(フルネーム)" required maxlength="50">
             <label for="email">メールアドレス</label>
-            <input type="email" name="email" id="email" placeholder="メールアドレス" required>
+            <input type="email" name="email" id="email" placeholder="メールアドレス" required maxlength="50">
             <label for="tel">電話番号</label>
-            <input type="tel" name="tel" id="tel" placeholder="電話番号" required>
+            <input type="tel" name="tel" id="tel" placeholder="電話番号" required maxlength="50" pattern="^[0-9]{2,4}[0-9]{2,4}[0-9]{3,4}$">
             <label for="zip-address">住所</label>
             <div id="zip-address">
-                <input type="text" name="zip" id="zip" placeholder="郵便番号(ハイフン有)" required pattern="^[0-9]{3}-[0-9]{4}$">
-                <input type="text" name="address" id="address" placeholder="住所" required>
+                <input type="text" name="zip" id="zip" placeholder="郵便番号(ハイフン有)" required pattern="^[0-9]{3}-[0-9]{4}$" maxlength="8">
+                <input type="text" name="address" id="address" placeholder="住所" required maxlength="50">
             </div>
             <label for="subject">件名</label>
-            <input type="text" name="subject" id="subject" placeholder="件名" required>
+            <input type="text" name="subject" id="subject" placeholder="件名" required maxlength="50">
             <label for="message">お問い合わせ内容</label>
             <textarea name="message" id="message" placeholder="お問い合わせ内容" required maxlength="1000"></textarea>
             <div class="alert">
                 <p>
                     このフォームのすべての項目を入力してください。
                     <br>
-                    また、お問い合わせ内容は、最大で1000文字までとなっております。ご注意ください。
+                    また、お問い合わせ内容は、最大で1000文字まで、その他の自由入力項目は50文字までとなっております。ご注意ください。
                 </p>
             </div>
             <input type="submit" value="送信">
