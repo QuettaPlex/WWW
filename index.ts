@@ -142,6 +142,9 @@ app.get("*", (req, res) => {
             case "ENOENT":
                 res.send(generateErrorPage(404));
                 break;
+            case "EISDIR":
+                res.send(generateErrorPage(404));
+                break;
             default:
                 res.send(generateErrorPage(500));
                 break;
