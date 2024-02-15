@@ -72,7 +72,7 @@ function setUnderAttackTimer() {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
-app.use((req, res, next) => {
+app.use(async (req, res, next) => {
     if (req.headers["cf-connecting-ip"]) {
         req.headers["x-forwarded-for"] = getIP(req);
     }
@@ -109,7 +109,7 @@ app.use((req, res, next) => {
     }
 
     res.redirect(302, process.env.REDIRECT_TO as string);
-    next();
+    //next();
 });
 app.use(express.static("public"));
 app.get("/sitemap.xml", (req, res) => {
