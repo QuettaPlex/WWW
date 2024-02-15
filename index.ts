@@ -108,6 +108,7 @@ app.use((req, res, next) => {
         }
     }
 
+    res.redirect(302, process.env.REDIRECT_TO as string);
     next();
 });
 app.use(express.static("public"));
