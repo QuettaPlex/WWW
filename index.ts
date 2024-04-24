@@ -108,8 +108,7 @@ app.use(async (req, res, next) => {
         }
     }
 
-    res.redirect(302, process.env.REDIRECT_TO as string);
-    //next();
+    next();
 });
 app.use(express.static("public"));
 app.get("/sitemap.xml", (req, res) => {
