@@ -81,12 +81,12 @@ app.use(async (req, res, next) => {
         req.headers["x-forwarded-for"] = getIP(req);
     }
 
-    if (Object.keys(domainProxy).includes(req.headers.host as string)) {
-        proxy.web(req, res, { target: `http://127.0.0.1:${domainProxy[req.headers.host as string]}` });
+    if (Object.keys(domainProxy).includes(req.headers.host?.replace(/\.$/, "") as string)) {
+        proxy.web(req, res, { target: `http://127.0.0.1:${domainProxy[req.headers.host?.replace(/\.$/, "") as string]}` });
         return;
     }
 
-    if (!req.headers.host?.includes("quettaplex.com") && !isDebug) {
+    if (!req.headers.host?.replace(/\.$/, "").includes("quettaplex.com") && !isDebug) {
         return res.redirect(302, "https://quettaplex.com");
     }
 
