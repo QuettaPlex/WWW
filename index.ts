@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import express from "express";
+import httpProxy from "http-proxy";
 import * as dateFns from "date-fns";
 import * as mailer from "nodemailer";
 import * as log4js from "log4js";
@@ -45,6 +46,9 @@ const smtp = mailer.createTransport({
         "pass": process.env.MAIL_PASS
     }
 });
+const proxy = httpProxy.createProxyServer();
+
+const domainProxy = JSON.parse(fs.readFileSync("./proxy.json", "utf8"));
 
 const discordWebhook = process.env.DISCORD_WEBHOOK as string;
 const template = fs.readFileSync("./public/page.html", "utf8");
@@ -75,6 +79,11 @@ app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(async (req, res, next) => {
     if (req.headers["cf-connecting-ip"]) {
         req.headers["x-forwarded-for"] = getIP(req);
+    }
+
+    if (Object.keys(domainProxy).includes(req.headers.host as string)) {
+        proxy.web(req, res, { target: `http://127.0.0.1:${domainProxy[req.headers.host as string]}` });
+        return;
     }
 
     if (!req.headers.host?.includes("quettaplex.com") && !isDebug) {
