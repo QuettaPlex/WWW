@@ -131,6 +131,10 @@ footer #links ul li a {
     color: var(--white);
 }
 
+footer a {
+    color: var(--white);
+}
+
 .head {
     font-size: 2.5rem;
     font-weight: bold;
