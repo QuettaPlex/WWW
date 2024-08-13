@@ -49,6 +49,7 @@ const smtp = mailer.createTransport({
 const proxy = httpProxy.createProxyServer();
 
 const domainProxy = JSON.parse(fs.readFileSync("./proxy.json", "utf8"));
+const domainRedirect = JSON.parse(fs.readFileSync("./redirect.json", "utf8"));
 
 const discordWebhook = process.env.DISCORD_WEBHOOK as string;
 const template = fs.readFileSync("./public/page.html", "utf8");
@@ -84,6 +85,10 @@ app.use(async (req, res, next) => {
     if (Object.keys(domainProxy).includes(req.headers.host?.replace(/\.$/, "") as string)) {
         proxy.web(req, res, { target: `http://127.0.0.1:${domainProxy[req.headers.host?.replace(/\.$/, "") as string]}` });
         return;
+    }
+
+    if (Object.keys(domainRedirect).includes(req.headers.host?.replace(/\.$/, "") as string)) {
+        return res.redirect(302, domainRedirect[req.headers.host?.replace(/\.$/, "") as string]);
     }
 
     if (!req.headers.host?.replace(/\.$/, "").includes("quettaplex.com") && !isDebug) {
